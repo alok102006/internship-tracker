@@ -1,0 +1,461 @@
+/* ============================================
+   Internship Daily Tracker - Styles
+   Dark (default) + Light theme via CSS variables
+   ============================================ */
+
+:root {
+  --bg-page: #0f0f14;
+  --bg-card: #1a1a2e;
+  --bg-card-hover: #222238;
+  --text-primary: #e8e8ed;
+  --text-muted: #9898a8;
+  --accent: #6366f1;
+  --accent-hover: #818cf8;
+  --border: #2d2d44;
+  --reminder-bg: #3b2a1a;
+  --reminder-border: #b45309;
+  --success: #22c55e;
+  --radius: 16px;
+  --shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.25);
+  --font: "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --transition-theme: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Light theme overrides (no duplicate rules) */
+[data-theme="light"] {
+  --bg-page: #f4f4f8;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f8f8fc;
+  --text-primary: #1a1a2e;
+  --text-muted: #5c5c70;
+  --accent: #4f46e5;
+  --accent-hover: #6366f1;
+  --border: #e4e4ec;
+  --reminder-bg: #fef3c7;
+  --reminder-border: #d97706;
+  --success: #16a34a;
+  --shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background: var(--bg-page);
+  transition: var(--transition-theme);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Theme toggle: top-right */
+.theme-wrap {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 20;
+}
+
+.theme-toggle {
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: none;
+  border-radius: 12px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  cursor: pointer;
+  box-shadow: var(--shadow-subtle);
+  transition: var(--transition-theme), transform 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+
+.theme-toggle:hover {
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+}
+
+.theme-toggle:active {
+  transform: translateY(0) scale(0.98);
+}
+
+[data-theme="light"] .theme-icon {
+  font-size: 0;
+}
+
+[data-theme="light"] .theme-icon::before {
+  content: "☀️";
+  font-size: 1.4rem;
+  display: block;
+}
+
+[data-theme="light"] .theme-icon::before {
+  font-size: 1.4rem;
+}
+
+.theme-icon {
+  display: block;
+}
+
+/* Reminder banner at top */
+.reminder-banner {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 12px 20px;
+  text-align: center;
+  background: var(--reminder-bg);
+  border-bottom: 2px solid var(--reminder-border);
+  color: var(--text-primary);
+  font-weight: 500;
+  transition: var(--transition-theme);
+}
+
+.reminder-banner.hidden {
+  display: none;
+}
+
+/* Centered container */
+.container {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 24px 16px 64px;
+}
+
+/* Card layout + subtle shadow */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-subtle);
+  padding: 28px 24px;
+  margin-bottom: 20px;
+  transition: var(--transition-theme);
+}
+
+/* Sticky top section (streak + progress) */
+.sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.header-card {
+  text-align: center;
+  padding: 32px 24px;
+}
+
+.header-card h1 {
+  margin: 0 0 12px;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.streak-display {
+  margin: 0 0 8px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+#streak-value {
+  font-variant-numeric: tabular-nums;
+}
+
+.last-completed {
+  margin: 0 0 20px;
+  font-size: 0.9rem;
+  color: var(--success);
+  min-height: 1.4em;
+}
+
+/* Progress bar */
+.progress-wrap {
+  margin-top: 8px;
+}
+
+.progress-bar {
+  height: 36px;
+  border-radius: 10px;
+  background: var(--border);
+  overflow: hidden;
+  position: relative;
+  transition: var(--transition-theme);
+}
+
+.progress-bar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: var(--progress-width, 0%);
+  background: var(--accent);
+  border-radius: 10px;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-shadow: 0 0 2px var(--bg-card);
+}
+
+.checklist-card h2,
+.apply-heading {
+  margin: 0 0 16px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.apply-heading {
+  margin-bottom: 12px;
+}
+
+#apply-count {
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+}
+
+/* Actions row (Open All) */
+.actions-row {
+  margin-bottom: 16px;
+}
+
+/* Platform list */
+.platform-list {
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 0;
+}
+
+.platform-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+[data-theme="light"] .platform-item {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.platform-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+[data-theme="light"] .platform-item:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* Checkbox with smooth animation */
+.platform-item input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+
+.platform-item input[type="checkbox"]:checked {
+  transform: scale(1.05);
+}
+
+.platform-item a {
+  flex: 1;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.platform-item a:hover {
+  color: var(--accent-hover);
+  border-bottom-color: var(--accent-hover);
+}
+
+.platform-item.checked a {
+  color: var(--text-muted);
+}
+
+.platform-item.checked a:hover {
+  color: var(--text-primary);
+}
+
+/* Buttons: base + press animation */
+.actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.btn {
+  font-family: var(--font);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 12px 24px;
+  min-height: 48px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-reset {
+  background: var(--border);
+  color: var(--text-primary);
+}
+
+.btn-reset:hover {
+  background: #3d3d5c;
+  transform: translateY(-1px);
+}
+
+[data-theme="light"] .btn-reset:hover {
+  background: #d4d4e0;
+}
+
+.btn-open-all {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-open-all:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+/* Apply counter buttons */
+.apply-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.btn-apply {
+  min-width: 56px;
+  font-size: 1.2rem;
+}
+
+.btn-increment,
+.btn-decrement {
+  background: var(--border);
+  color: var(--text-primary);
+}
+
+.btn-increment:hover,
+.btn-decrement:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* Install App button */
+.install-wrap {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.install-wrap.hidden {
+  display: none;
+}
+
+.btn-install {
+  background: var(--success);
+  color: #fff;
+}
+
+.btn-install:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* Mobile: full-width buttons, spacing, tap targets */
+@media (max-width: 480px) {
+  .container {
+    padding: 16px 12px 48px;
+  }
+
+  .theme-wrap {
+    top: 12px;
+    right: 12px;
+  }
+
+  .theme-toggle {
+    width: 44px;
+    height: 44px;
+  }
+
+  .card {
+    padding: 20px 16px;
+  }
+
+  .header-card {
+    padding: 24px 16px;
+  }
+
+  .header-card h1 {
+    font-size: 1.5rem;
+  }
+
+  .platform-item {
+    padding: 14px 16px;
+    min-height: 52px;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .actions .btn,
+  .actions-row .btn {
+    width: 100%;
+  }
+
+  .apply-actions {
+    width: 100%;
+  }
+
+  .apply-actions .btn-apply {
+    flex: 1;
+  }
+
+  .install-wrap .btn-install {
+    width: 100%;
+  }
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1a1a2e">
+  <meta name="description" content="Track your daily internship applications across LinkedIn, Internshala, Unstop, Indeed, Naukri & Wellfound. Build your streak!">
+  <title>Internship Daily Tracker</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Theme toggle: top-right -->
+  <div class="theme-wrap">
+    <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle light or dark mode">
+      <span class="theme-icon" aria-hidden="true">🌙</span>
+    </button>
+  </div>
+
+  <!-- Daily reminder banner (shown when today's checklist is incomplete) -->
+  <div id="reminder-banner" class="reminder-banner hidden" role="alert">
+    <span>⚠️ You haven't completed today's internship routine</span>
+  </div>
+
+  <main class="container">
+    <!-- Sticky top: streak + progress -->
+    <header class="card header-card sticky-top">
+      <h1>🚀 Internship Daily Tracker</h1>
+      <p class="streak-display" id="streak-display">🔥 Streak: <span id="streak-value">0</span> days</p>
+      <p class="last-completed" id="last-completed" aria-live="polite"></p>
+      <!-- Progress bar above checklist (in this card for sticky context) -->
+      <div class="progress-wrap" id="progress-wrap">
+        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+          <span class="progress-text" id="progress-text">0 / 6 completed</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="card checklist-card">
+      <h2>Today's platforms</h2>
+      <div class="actions actions-row">
+        <button type="button" class="btn btn-open-all" id="open-all" aria-label="Open all platforms in new tabs">🌐 Open All Platforms</button>
+      </div>
+      <ul class="platform-list" id="platform-list" role="list">
+        <!-- Platform items injected by script.js -->
+      </ul>
+      <div class="actions">
+        <button type="button" class="btn btn-reset" id="reset-today" aria-label="Reset today's progress">Reset Today</button>
+      </div>
+    </section>
+
+    <!-- Apply counter -->
+    <section class="card apply-card">
+      <h2 class="apply-heading">📌 Applications sent today: <span id="apply-count">0</span></h2>
+      <div class="apply-actions">
+        <button type="button" class="btn btn-apply btn-decrement" id="apply-decrement" aria-label="Decrement applications">➖</button>
+        <button type="button" class="btn btn-apply btn-increment" id="apply-increment" aria-label="Increment applications">➕</button>
+      </div>
+    </section>
+
+    <!-- PWA Install (shown only when install prompt is available) -->
+    <div class="install-wrap hidden" id="install-wrap">
+      <button type="button" class="btn btn-install" id="install-app" aria-label="Install app">📲 Install App</button>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
